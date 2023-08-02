@@ -2,8 +2,8 @@
 Changelog for package ewellix_tlt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2023-08-02)
+------------------
 * Update package.xml
 * Updated dependencies
 * Merge pull request `#1 <https://github.com/clearpathrobotics/ewellix_tlt/issues/1>`_ from clearpathrobotics/cpr-noetic-devel
