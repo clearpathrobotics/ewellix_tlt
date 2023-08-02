@@ -2,8 +2,8 @@
 Changelog for package ewellix_tlt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2023-08-02)
+------------------
 * Updated maintainer
 * Contributors: Luis Camero
 
