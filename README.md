@@ -3,14 +3,10 @@
 This ROS package allows you to control or simulate an Ewellix TLT lifting column.
 It is compatible with the Kinetic and melodic versions.
 
-## Dependencies
-```bash
-sudo apt-get install -y libserial-dev
-```
 ## Use in simulation
 
 ```bash
-roslaunch ewellix_tlt demo_simu_ewellix.launch
+roslaunch ewellix_tlt ewellix_simulated.launch
 ```
 Once the program is launched you can move the column joint via the joint_state_publisher_gui interface.
 
@@ -20,7 +16,5 @@ Connect the column to your computer and modify the launcher to set the port. By 
 Then use:
 
 ```bash
-roslaunch ewellix_tlt component_ewellix.launch
+roslaunch ewellix_tlt ewellix_driver.launch
 ```
-Once the program is launched, you can control the size of the column by posting on the topic: /ewellix_tlt/size 
-Value between 0.0 and 0.5.

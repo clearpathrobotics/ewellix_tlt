@@ -6,7 +6,6 @@ add_compile_options(-std=c++11)
 
 set(${PROJECT_NAME}_CATKIN_DEPS
   roscpp
-  rospy
   std_msgs
   sensor_msgs
   actionlib
@@ -57,7 +56,6 @@ add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catk
 
  target_link_libraries(
    ${PROJECT_NAME}_node
-   serial
    ${catkin_LIBRARIES}
  )
 
