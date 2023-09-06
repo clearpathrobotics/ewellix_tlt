@@ -3,11 +3,13 @@
   <!-- Arguments -->
   <arg name="name" default="ewellix_tlt"/>
   <arg name="port" default="/dev/ttyUSB0"/>
+  <arg name="prefix" default=""/>
   <arg name="baudrate" default="38400"/>
 
   <!-- Ewellix ROS Node -->
   <node name="$(arg name)" pkg="ewellix_tlt" type="ewellix_tlt_node" output="screen" respawn="true" >
     <param name="port" value="$(arg port)"/>
+    <param name="prefix" value="$(arg prefix)"/>
     <param name="baudrate" value="$(arg baudrate)"/>
     <!-- Re-map to Global Joint States -->
     <remap from="~/joint_states" to="/joint_states"/>

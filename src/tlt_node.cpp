@@ -43,6 +43,7 @@ TltNode::TltNode(ros::NodeHandle private_nh)
     // Parameters
     private_nh.param<string>("port", port, "/dev/ttyUSB0");
     private_nh.param<int>("baudrate", baudrate, 38400);
+    private_nh.param<string>("prefix", prefix_, "");
 
     // Services
     srv_init_sequence_ = private_nh.advertiseService("actions/init_sequence", &TltNode::srvInitSequence, this);
@@ -99,7 +100,7 @@ void TltNode::publishJoinStates(){
         joint_states.position.resize(size);
         joint_states.velocity.resize(size);
         joint_states.effort.resize(size);
-        joint_states.name[0] = "ewellix_lift_top_joint";
+        joint_states.name[0] = prefix_ + "ewellix_lift_top_joint";
         joint_states.position[0] = srl_.getPosition();
         joint_states.velocity[0] = 0.0;
         joint_states.effort[0] = 0.1;

@@ -56,6 +56,7 @@ class TltNode
         SerialComTlt srl_;
         thread com_thread_;
         thread join_states_thread_;
+        std::string prefix_;
         // Actions
         JointTrajectoryActionServer* srv_follow_joint_trajectory_;
 
