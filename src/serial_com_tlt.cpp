@@ -941,44 +941,32 @@ void SerialComTlt::motionQueueClear(){
 /*Prune queue*/
 void SerialComTlt::motionQueuePrune(){
     motion_queue_lock_.lock();
-    std::queue<SerialComTlt::MotionGoal> pruned;
-    SerialComTlt::MotionGoal prev = motion_queue_.front();
-    motion_queue_.pop();
-    SerialComTlt::MotionGoal curr = motion_queue_.front();
-    bool direction = curr.mot1_ticks >= prev.mot1_ticks;
-    bool new_direction;
-    pruned.push(prev);
+    // Convert Queue to Array
+    std::vector<SerialComTlt::MotionGoal> motion_vector;
     while(!motion_queue_.empty()){
-        curr = motion_queue_.front();
-        if(curr.mot1_ticks == prev.mot1_ticks){
-            new_direction = direction;
+        motion_vector.emplace_back(std::move(motion_queue_.front()));
+        motion_queue_.pop();
+    }
+    // Find all Local Maxima and Minima
+    std::vector<int> maxmin;
+    maxmin.push_back(0);
+    maxmin.push_back(motion_vector.size() - 1);
+    for(int i = 1; i < motion_vector.size() - 1; i++){
+        // Find Maxima
+        if(motion_vector[i-1].mot1_ticks < motion_vector[i].mot1_ticks
+            && motion_vector[i].mot1_ticks > motion_vector[i+1].mot1_ticks){
+            maxmin.push_back(i);
         }
-        else{
-            curr.mot1_ticks >= prev.mot1_ticks;
-        }
-        // Same
-        if(((
-            curr.mot1_ticks <= (prev.mot1_ticks + TICK_ERROR_MARGIN)) && (
-            curr.mot1_ticks >= (prev.mot1_ticks - TICK_ERROR_MARGIN))) && ((
-            curr.mot2_ticks <= (prev.mot2_ticks + TICK_ERROR_MARGIN)) && (
-            curr.mot2_ticks >= (prev.mot2_ticks - TICK_ERROR_MARGIN)))){
-            motion_queue_.pop();
-        }
-        else if (direction && new_direction)
-        {
-            motion_queue_.pop();
-        }
-        else{
-            pruned.push(curr);
-            prev = curr;
-            motion_queue_.pop();
-            direction = new_direction;
-        }
-        if(motion_queue_.empty()){
-            pruned.push(curr);
+        // Find Minima
+        if(motion_vector[i-1].mot1_ticks > motion_vector[i].mot1_ticks
+            && motion_vector[i].mot1_ticks < motion_vector[i+1].mot1_ticks){
+            maxmin.push_back(i);
         }
     }
-    std::swap(motion_queue_, pruned);
+    // Convert Array to Queue
+    for(auto it = maxmin.begin(); it != maxmin.end(); it++){
+        motion_queue_.push(motion_vector[*it]);
+    }
     motion_queue_lock_.unlock();
 }
 
