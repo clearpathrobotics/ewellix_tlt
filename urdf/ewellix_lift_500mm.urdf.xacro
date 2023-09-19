@@ -28,7 +28,7 @@
 
 
   <xacro:macro name="ewellix_lift_500mm" params="prefix parent cut_model:=false *origin">
-    
+
     <!-- Lift base link -->
     <link name="${prefix}ewellix_lift_base_link">
 
@@ -43,9 +43,9 @@
       </visual>
 
       <collision>
-        <origin xyz="0.0 0 0.0" rpy="0 0 ${M_PI/2}"/>
+        <origin xyz="0.000 -0.035 0.188" rpy="0 0 ${M_PI/2}"/>
         <geometry>
-          <mesh filename="package://ewellix_tlt/meshes/ewellix_lift_base_500mm.stl"  scale="0.001 0.001 0.001"/>
+          <box size="0.163 0.234 0.376"/>
         </geometry>
       </collision>
 
@@ -61,7 +61,7 @@
     <joint name="${prefix}ewellix_lift_base_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
-      <child link="${prefix}ewellix_lift_base_link" /> 
+      <child link="${prefix}ewellix_lift_base_link" />
     </joint>
 
 
@@ -85,13 +85,15 @@
       </visual>
 
       <collision>
-        <origin xyz="0.0 0 0.0" rpy="0 0 -${M_PI/2}"/>
+        <origin xyz="0.0 0 -0.3515" rpy="0 0 -${M_PI/2}"/>
         <geometry>
           <xacro:if value="${cut_model}">
-            <mesh filename="package://ewellix_tlt/meshes/ewellix_lift_top_500mm.stl" scale="0.001 0.001 0.001"/>
+            <!-- <mesh filename="package://ewellix_tlt/meshes/ewellix_lift_top_500mm.stl" scale="0.001 0.001 0.001"/> -->
+            <box size="0.146 0.146 0.703"/>
           </xacro:if>
           <xacro:unless value="${cut_model}">
-            <mesh filename="package://ewellix_tlt/meshes/ewellix_lift_top_500mm.stl" scale="0.001 0.001 0.001"/>
+            <!-- <mesh filename="package://ewellix_tlt/meshes/ewellix_lift_top_500mm.stl" scale="0.001 0.001 0.001"/> -->
+            <box size="0.146 0.146 0.703"/>
           </xacro:unless>
         </geometry>
       </collision>
@@ -111,7 +113,7 @@
       <child link="${prefix}ewellix_lift_top_link" />
       <origin xyz="0 0 0.52" rpy="0 0 0" />
       <limit effort="100000" lower="0.0" upper="0.5" velocity="0.088"/>
-      <axis xyz="0 0 1" /> 
+      <axis xyz="0 0 1" />
     </joint>
 
 
@@ -135,5 +137,5 @@
 
   </xacro:macro>
 
-  
+
 </robot>
