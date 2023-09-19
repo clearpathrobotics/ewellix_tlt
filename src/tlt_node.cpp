@@ -78,7 +78,7 @@ TltNode::TltNode(ros::NodeHandle private_nh)
         abort();
     }
 
-    srv_follow_joint_trajectory_ = new JointTrajectoryActionServer("joint_trajectory_controller/follow_joint_trajectory", private_nh, srl_);
+    srv_follow_joint_trajectory_ = new JointTrajectoryActionServer("joint_trajectory_controller/follow_joint_trajectory", prefix_, private_nh, srl_);
 }
 
 TltNode::~TltNode(){

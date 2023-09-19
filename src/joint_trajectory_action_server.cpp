@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "ewellix_tlt/joint_trajectory_action_server.h"
 
-JointTrajectoryActionServer::JointTrajectoryActionServer(const std::string server_name, ros::NodeHandle &nh, SerialComTlt &srl):
+JointTrajectoryActionServer::JointTrajectoryActionServer(const std::string server_name, std::string prefix, ros::NodeHandle &nh, SerialComTlt &srl):
     server_name_(server_name),
     nh_(nh),
     server_(nh, server_name, boost::bind(&JointTrajectoryActionServer::goalReceivedCb, this, _1), boost::bind(&JointTrajectoryActionServer::preemptReceivedCb, this, _1), false),
@@ -38,6 +38,8 @@ JointTrajectoryActionServer::JointTrajectoryActionServer(const std::string serve
 {
     srl_ = &srl;
     server_.start();
+    prefix_ = prefix;
+    joint_names_ = {prefix_ + "ewellix_lift_top_joint"};
     setServerState(ActionServerState::IDLE);
 }
 
@@ -118,6 +120,12 @@ bool JointTrajectoryActionServer::isGoalAcceptable(actionlib::ActionServer<contr
     if (joint_names_ != goal->trajectory.joint_names)
     {
         ROS_INFO("Unacceptable goal. Joint names mismatch.");
+        for(auto it = joint_names_.begin(); it != joint_names_.end(); it++){
+            cout << "joint_names: " << *it << endl;
+        }
+        for(auto it = goal->trajectory.joint_names.begin(); it != goal->trajectory.joint_names.end(); it++){
+            cout << "traj_joint_names: " << *it << endl;
+        }
         return false;
     }
     return true;

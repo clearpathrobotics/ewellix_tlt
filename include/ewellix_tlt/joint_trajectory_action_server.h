@@ -52,7 +52,7 @@ class JointTrajectoryActionServer
         };
 
         JointTrajectoryActionServer() = delete;
-        JointTrajectoryActionServer(const std::string server_name, ros::NodeHandle &nh, SerialComTlt &srl);
+        JointTrajectoryActionServer(const std::string server_name, const std::string prefix, ros::NodeHandle &nh, SerialComTlt &srl);
         ~JointTrajectoryActionServer();
 
         ActionServerState getState() {return server_state_;};
@@ -85,7 +85,7 @@ class JointTrajectoryActionServer
         // Params
         double default_goal_time_tolerance_;
         double default_goal_tolerance_;
-        std::vector<std::string> joint_names_ = {"ewellix_lift_top_joint"};
+        std::vector<std::string> joint_names_;
         std::string prefix_;
 
         // Action Server Callbacks
